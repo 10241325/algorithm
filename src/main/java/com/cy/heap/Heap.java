@@ -115,41 +115,4 @@ public class Heap {
             }
         }
     }
-
-    public static int a = 0;
-    public static Object lock = new Object();
-    public static boolean flag = true;
-
-    public static void main(String[] args) {
-        Thread thread1 = new Thread(() -> {
-            synchronized (lock){
-                if(!flag){
-                    try {
-                        lock.wait();
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-                System.out.println(Thread.currentThread().getName() + (a++));
-                lock.notify();
-            }
-
-        });
-        Thread thread2 = new Thread(() -> {
-            synchronized (lock){
-                if(!flag){
-                    try {
-                        lock.wait();
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-                System.out.println(Thread.currentThread().getName() + (a++));
-                lock.notify();
-            }
-
-        });
-        thread1.start();
-        thread2.start();
-    }
 }
