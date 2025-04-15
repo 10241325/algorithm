@@ -1,5 +1,7 @@
 package com.cy.tree;
 
+import com.cy.sort.SortUtil;
+
 import java.util.*;
 
 /**
@@ -49,18 +51,27 @@ public class Tree {
         pre(head.right);
     }
 
+    /**
+     * 非递归方式先序遍历
+     * 1、先把head压栈
+     * 2、栈不为空 栈顶弹出记录cur 有右压入右 有左压入左 一定先右再左 这样下次弹出就是左
+     * 3、跳到第二步
+     *
+     * @author changyuan
+     * @date 2025-04-15 11:30:28
+     */
     public static void preWithStack(TreeNode head) {
         if (null != head) {
             Stack<TreeNode> stack = new Stack<>();
             stack.push(head);
             while (!stack.isEmpty()) {
-                head = stack.pop();
-                System.out.println(head.val);
-                if (null != head.right) {
-                    stack.push(head.right);
+                TreeNode node = stack.pop();
+                System.out.println(node);
+                if (null != node.right) {
+                    stack.push(node.right);
                 }
-                if (null != head.left) {
-                    stack.push(head.left);
+                if (null != node.left) {
+                    stack.push(node.left);
                 }
             }
         }
@@ -129,9 +140,44 @@ public class Tree {
             }
             while (!s2.isEmpty()) {
                 // 左右头
-                System.out.println(s2.pop().val);
+                System.out.print(s2.pop().val + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    /**
+     * 单个栈实现后序遍历  4 5 2 6 7 3 1
+     * 1
+     * 23
+     * 4567
+     *
+     * @author changyuan
+     * @date 2025-04-15 12:31:32
+     */
+    public static void posWithStack2(TreeNode head) {
+        if (null != head) {
+            Stack<TreeNode> stack = new Stack<>();
+            stack.push(head);
+            TreeNode c;
+            while (!stack.isEmpty()) {
+                c = stack.peek();
+                // 处理5节点后 此处的c=2 因为是后序遍历 那么4肯定已经处理过了 但是head标记的是5 left为4 所以此处需要判断head != c.right
+                // 其实就是避免重新访问左子树 因为4必然在5之前访问 但是此时的head是5
+                if (null != c.left && head != c.left && head != c.right) {
+                    stack.push(c.left);
+                } else if (null != c.right && head != c.right) {
+                    stack.push(c.right);
+                } else {
+                    System.out.print(stack.pop().val + " ");
+                    // 标记已经处理的节点 假设已经处理到5节点了
+                    head = c;
+                }
             }
         }
+
+
+        System.out.println();
     }
 
     /**
@@ -386,7 +432,16 @@ public class Tree {
 //        root4.right = new TreeNode(4);
 //        root4.right.left = new TreeNode(3);
 //        root4.right.right = new TreeNode(6);
-        System.out.println(isValidBST(root4));
-        System.out.println(-Double.MAX_VALUE);
+//        System.out.println(isValidBST(root4));
+//        System.out.println(-Double.MAX_VALUE);
+        TreeNode root5 = new TreeNode(1);
+        root5.left = new TreeNode(2);
+        root5.left.left = new TreeNode(4);
+        root5.left.right = new TreeNode(5);
+        root5.right = new TreeNode(3);
+        root5.right.left = new TreeNode(6);
+        root5.right.right = new TreeNode(7);
+        posWithStack2(root5);
+        posWithStack(root5);
     }
 }
