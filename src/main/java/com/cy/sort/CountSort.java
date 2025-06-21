@@ -21,9 +21,11 @@ public class CountSort {
         }
         int j = 0;
         for (int i = 0; i < max; i++) {
+            // 当前下标的个数未出现过 直接跳过
             if (helper[i] == 0) {
                 continue;
             }
+            // helper[i] 是当前数字出现的个数
             for (int k = 0; k < helper[i]; k++) {
                 arr[j++] = i;
             }
@@ -32,7 +34,7 @@ public class CountSort {
 
     public static void main(String[] args) {
         int[] arr = new int[]{5, 4, 4, 2, 3, 2, 1};
-        countSort(arr, 200);
+        countSort(arr, 7);
         PrintUtil.toArray(arr);
     }
 }
