@@ -1,10 +1,5 @@
 package com.cy.bit;
 
-import com.cy.util.PrintUtil;
-
-import java.util.Arrays;
-import java.util.PriorityQueue;
-
 /**
  * 位运算
  *
