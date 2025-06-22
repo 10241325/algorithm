@@ -23,11 +23,11 @@ public class RadixSort {
      * @param arr   数组
      * @param start 开始位置
      * @param end   结束位置
-     * @param digit 开始位置到结束位置最大值的位数 比如9999 则位数为4
+     * @param maxBits 开始位置到结束位置最大值的位数 比如9999 则位数为4
      * @author changyuan
      * @date 2025-03-10 11:27:37
      */
-    private static void radixSort(int[] arr, int start, int end, int digit) {
+    private static void radixSort(int[] arr, int start, int end, int maxBits) {
         final int radix = 10;
         int i = 0, j = 0;
         int[] helper = new int[end - start + 1];
@@ -36,7 +36,7 @@ public class RadixSort {
         // 第二次进桶十位
         // 第三次进桶百位
         // ......
-        for (int d = 1; d <= digit; d++) {
+        for (int d = 1; d <= maxBits; d++) {
             // 10个空间
             // count[0] 当前位(d位)是0的数字有多少个
             // count[1] 当前位(d位)是(0和1)的数字有多少个
